@@ -1,0 +1,55 @@
+{
+  "Part statement": {
+    "prefix": "pts",
+    "body": [
+      "part '${TM_FILENAME_BASE}.g.dart';"
+    ],
+    "description": "Creates a filled-in part statement"
+  },
+  "Part 'Freezed' statement": {
+    "prefix": "ptf",
+    "body": [
+      "part '${TM_FILENAME_BASE}.freezed.dart';"
+    ],
+    "description": "Creates a filled-in freezed part statement"
+  },
+  "Freezed Data Class Json": {
+    "prefix": "fdataclass",
+    "body": [
+      "@freezed",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1}{",
+      "  const factory ${1}(${2}) = _${1};",
+      "}"
+    ],
+    "description": "Freezed Data Class"
+  },
+  "Freezed Data Class JSON": {
+    "prefix": "fdataclassjson",
+    "body": [
+      "@freezed",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1}{",
+      "  const factory ${1}(${2}) = _${1};",
+      "",
+      "  factory ${1}.fromJson(Map<String, dynamic> json) => _$${1}FromJson(json);",
+      "}"
+    ],
+    "description": "Freezed Data Class with JSON"
+  },
+  "Freezed Union": {
+    "prefix": "funion",
+    "body": [
+      "@freezed",
+      "class ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}} with _$${1}{",
+      "  const factory ${1}.${2}(${4}) = ${3};",
+      "}"
+    ],
+    "description": "Freezed Union"
+  },
+  "Freezed Union Case": {
+    "prefix": "funioncase",
+    "body": [
+      "const factory ${1:${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}}.${2}(${4}) = ${3};"
+    ],
+    "description": "Freezed Union Case"
+  },
+}
