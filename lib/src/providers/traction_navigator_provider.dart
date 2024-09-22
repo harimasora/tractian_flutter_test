@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import 'router_provider.dart';
 
 part 'traction_navigator_provider.g.dart';
 
@@ -8,17 +11,17 @@ class TractionNavigation {
 
   final ProviderRef<TractionNavigation> ref;
 
-  NavigatorState? get _navigator => ref.read(rootStateProvider);
+  GoRouter get _router => ref.read(routerProvider);
 
   void push(String path, [Object? extra]) {
-    _navigator?.pushNamed(path, arguments: extra);
+    _router.push(path, extra: extra);
   }
 
   void pop() {
-    if (_navigator?.canPop() == true) {
-      _navigator?.pop();
+    if (_router.canPop() == true) {
+      _router.pop();
     } else {
-      _navigator?.pushNamed('/');
+      _router.push('/');
     }
   }
 }
