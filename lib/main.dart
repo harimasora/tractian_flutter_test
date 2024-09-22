@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tractian_flutter_test/src/data/fake_api.dart';
+
+import 'src/providers/router_provider.dart';
 
 void main() {
   runApp(
@@ -15,26 +16,11 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final companies = ref.watch(companiesProvider);
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Tractian'),
-          backgroundColor: Colors.blueAccent,
-        ),
-        body: companies.when(
-          data: (companies) => ListView.builder(
-            itemCount: companies.length,
-            itemBuilder: (context, index) => ListTile(
-              title: Text(companies[index].name),
-              subtitle: Text(companies[index].id),
-              onTap: () => print('tap ${companies[index].toString()}'),
-            ),
-          ),
-          error: (error, stackTrace) => Text(error.toString()),
-          loading: () => Text('Loading...'),
-        ),
-      ),
+    final router = ref.watch(routerProvider);
+    return MaterialApp.router(
+      routeInformationProvider: router.routeInformationProvider,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
     );
   }
 }
