@@ -9,7 +9,7 @@ part 'tree_view_notifier.g.dart';
 class TreeViewNotifier extends _$TreeViewNotifier {
   @override
   TreeViewState build(String companyId) {
-    final response = ref.watch(assetsProvider(companyId));
+    final response = ref.watch(treeViewProvider(companyId));
     return TreeViewState(response: response);
   }
 

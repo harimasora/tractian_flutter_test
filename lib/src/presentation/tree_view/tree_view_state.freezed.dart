@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TreeViewState {
-  AsyncValue<List<Asset>> get response => throw _privateConstructorUsedError;
+  AsyncValue<TreeViewResponse> get response =>
+      throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   String get searchText => throw _privateConstructorUsedError;
   List<AssetType> get currentFilters => throw _privateConstructorUsedError;
@@ -35,7 +36,7 @@ abstract class $TreeViewStateCopyWith<$Res> {
       _$TreeViewStateCopyWithImpl<$Res, TreeViewState>;
   @useResult
   $Res call(
-      {AsyncValue<List<Asset>> response,
+      {AsyncValue<TreeViewResponse> response,
       bool loading,
       String searchText,
       List<AssetType> currentFilters});
@@ -65,7 +66,7 @@ class _$TreeViewStateCopyWithImpl<$Res, $Val extends TreeViewState>
       response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<List<Asset>>,
+              as AsyncValue<TreeViewResponse>,
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -91,7 +92,7 @@ abstract class _$$TreeViewStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {AsyncValue<List<Asset>> response,
+      {AsyncValue<TreeViewResponse> response,
       bool loading,
       String searchText,
       List<AssetType> currentFilters});
@@ -119,7 +120,7 @@ class __$$TreeViewStateImplCopyWithImpl<$Res>
       response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<List<Asset>>,
+              as AsyncValue<TreeViewResponse>,
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -140,7 +141,7 @@ class __$$TreeViewStateImplCopyWithImpl<$Res>
 
 class _$TreeViewStateImpl extends _TreeViewState {
   const _$TreeViewStateImpl(
-      {this.response = const AsyncValue<List<Asset>>.loading(),
+      {this.response = const AsyncValue<TreeViewResponse>.loading(),
       this.loading = false,
       this.searchText = '',
       final List<AssetType> currentFilters = const []})
@@ -149,7 +150,7 @@ class _$TreeViewStateImpl extends _TreeViewState {
 
   @override
   @JsonKey()
-  final AsyncValue<List<Asset>> response;
+  final AsyncValue<TreeViewResponse> response;
   @override
   @JsonKey()
   final bool loading;
@@ -199,14 +200,14 @@ class _$TreeViewStateImpl extends _TreeViewState {
 
 abstract class _TreeViewState extends TreeViewState {
   const factory _TreeViewState(
-      {final AsyncValue<List<Asset>> response,
+      {final AsyncValue<TreeViewResponse> response,
       final bool loading,
       final String searchText,
       final List<AssetType> currentFilters}) = _$TreeViewStateImpl;
   const _TreeViewState._() : super._();
 
   @override
-  AsyncValue<List<Asset>> get response;
+  AsyncValue<TreeViewResponse> get response;
   @override
   bool get loading;
   @override

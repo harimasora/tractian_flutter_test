@@ -3,6 +3,28 @@
 part of 'fake_api.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$TreeViewResponseImpl _$$TreeViewResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$TreeViewResponseImpl(
+      locations: (json['locations'] as List<dynamic>)
+          .map((e) => Location.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      assets: (json['assets'] as List<dynamic>)
+          .map((e) => Asset.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$TreeViewResponseImplToJson(
+        _$TreeViewResponseImpl instance) =>
+    <String, dynamic>{
+      'locations': instance.locations,
+      'assets': instance.assets,
+    };
+
+// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
@@ -293,6 +315,134 @@ class _AssetsProviderElement
 
   @override
   String get companyId => (origin as AssetsProvider).companyId;
+}
+
+String _$treeViewHash() => r'fa357505ee2230ca1e2fd34e3cef1b5d2959dc2b';
+
+/// See also [treeView].
+@ProviderFor(treeView)
+const treeViewProvider = TreeViewFamily();
+
+/// See also [treeView].
+class TreeViewFamily extends Family<AsyncValue<TreeViewResponse>> {
+  /// See also [treeView].
+  const TreeViewFamily();
+
+  /// See also [treeView].
+  TreeViewProvider call(
+    String companyId,
+  ) {
+    return TreeViewProvider(
+      companyId,
+    );
+  }
+
+  @override
+  TreeViewProvider getProviderOverride(
+    covariant TreeViewProvider provider,
+  ) {
+    return call(
+      provider.companyId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'treeViewProvider';
+}
+
+/// See also [treeView].
+class TreeViewProvider extends AutoDisposeFutureProvider<TreeViewResponse> {
+  /// See also [treeView].
+  TreeViewProvider(
+    String companyId,
+  ) : this._internal(
+          (ref) => treeView(
+            ref as TreeViewRef,
+            companyId,
+          ),
+          from: treeViewProvider,
+          name: r'treeViewProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$treeViewHash,
+          dependencies: TreeViewFamily._dependencies,
+          allTransitiveDependencies: TreeViewFamily._allTransitiveDependencies,
+          companyId: companyId,
+        );
+
+  TreeViewProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.companyId,
+  }) : super.internal();
+
+  final String companyId;
+
+  @override
+  Override overrideWith(
+    FutureOr<TreeViewResponse> Function(TreeViewRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TreeViewProvider._internal(
+        (ref) => create(ref as TreeViewRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        companyId: companyId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<TreeViewResponse> createElement() {
+    return _TreeViewProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TreeViewProvider && other.companyId == companyId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, companyId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin TreeViewRef on AutoDisposeFutureProviderRef<TreeViewResponse> {
+  /// The parameter `companyId` of this provider.
+  String get companyId;
+}
+
+class _TreeViewProviderElement
+    extends AutoDisposeFutureProviderElement<TreeViewResponse>
+    with TreeViewRef {
+  _TreeViewProviderElement(super.provider);
+
+  @override
+  String get companyId => (origin as TreeViewProvider).companyId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
