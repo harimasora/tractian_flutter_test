@@ -13,6 +13,7 @@ class AssetsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(treeViewNotifierProvider(companyId).notifier);
     final state = ref.watch(treeViewNotifierProvider(companyId));
+    final items = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.filteredAssets));
     return Scaffold(
       appBar: AppBar(
         title: Text('Tractian'),
@@ -77,12 +78,12 @@ class AssetsPage extends ConsumerWidget {
             Divider(),
             Expanded(
               child: ListView.builder(
-                itemCount: state.filteredAssets.length,
+                itemCount: items.length,
                 itemBuilder: (context, index) => ListTile(
-                  title: Text(state.filteredAssets[index].name),
-                  subtitle: Text(state.filteredAssets[index].sensorType.toString()),
+                  title: Text(items[index].name),
+                  subtitle: Text(items[index].sensorType.toString()),
                   onTap: () {
-                    print(state.filteredAssets[index].toString());
+                    print(items[index].toString());
                   },
                 ),
               ),
