@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../models/asset.dart';
+import '../../models/asset.dart';
 
-part 'assets_state.freezed.dart';
+part 'tree_view_state.freezed.dart';
 
 enum AssetType {
   energy,
@@ -11,15 +11,15 @@ enum AssetType {
 }
 
 @freezed
-class AssetsState with _$AssetsState {
-  const factory AssetsState({
+class TreeViewState with _$TreeViewState {
+  const factory TreeViewState({
     @Default(AsyncValue<List<Asset>>.loading()) AsyncValue<List<Asset>> response,
     @Default(false) bool loading,
     @Default('') String searchText,
     @Default([]) List<AssetType> currentFilters,
-  }) = _AssetsState;
+  }) = _TreeViewState;
 
-  const AssetsState._();
+  const TreeViewState._();
 
   List<Asset> get filteredAssets {
     final assets = response.asData?.value ?? [];

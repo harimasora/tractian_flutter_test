@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'assets_notifier.dart';
-import 'assets_state.dart';
+import 'tree_view_notifier.dart';
+import 'tree_view_state.dart';
 
 class AssetsPage extends ConsumerWidget {
   const AssetsPage({super.key, required this.companyId});
@@ -11,8 +11,8 @@ class AssetsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(assetsNotifierProvider(companyId).notifier);
-    final state = ref.watch(assetsNotifierProvider(companyId));
+    final notifier = ref.watch(treeViewNotifierProvider(companyId).notifier);
+    final state = ref.watch(treeViewNotifierProvider(companyId));
     return Scaffold(
       appBar: AppBar(
         title: Text('Tractian'),

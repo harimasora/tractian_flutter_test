@@ -1,16 +1,16 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/fake_api.dart';
-import 'assets_state.dart';
+import '../../data/fake_api.dart';
+import 'tree_view_state.dart';
 
-part 'assets_notifier.g.dart';
+part 'tree_view_notifier.g.dart';
 
 @riverpod
-class AssetsNotifier extends _$AssetsNotifier {
+class TreeViewNotifier extends _$TreeViewNotifier {
   @override
-  AssetsState build(String companyId) {
+  TreeViewState build(String companyId) {
     final response = ref.watch(assetsProvider(companyId));
-    return AssetsState(response: response);
+    return TreeViewState(response: response);
   }
 
   void refresh() {

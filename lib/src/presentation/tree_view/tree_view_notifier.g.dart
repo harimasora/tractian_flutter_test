@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'assets_notifier.dart';
+part of 'tree_view_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$assetsNotifierHash() => r'79d660806c27c2335bb27eefa2f1310d6ff5c694';
+String _$treeViewNotifierHash() => r'23b6d29c121ae2e1eb6a50acb7766f0ae1caf3cb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,36 +29,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$AssetsNotifier
-    extends BuildlessAutoDisposeNotifier<AssetsState> {
+abstract class _$TreeViewNotifier
+    extends BuildlessAutoDisposeNotifier<TreeViewState> {
   late final String companyId;
 
-  AssetsState build(
+  TreeViewState build(
     String companyId,
   );
 }
 
-/// See also [AssetsNotifier].
-@ProviderFor(AssetsNotifier)
-const assetsNotifierProvider = AssetsNotifierFamily();
+/// See also [TreeViewNotifier].
+@ProviderFor(TreeViewNotifier)
+const treeViewNotifierProvider = TreeViewNotifierFamily();
 
-/// See also [AssetsNotifier].
-class AssetsNotifierFamily extends Family<AssetsState> {
-  /// See also [AssetsNotifier].
-  const AssetsNotifierFamily();
+/// See also [TreeViewNotifier].
+class TreeViewNotifierFamily extends Family<TreeViewState> {
+  /// See also [TreeViewNotifier].
+  const TreeViewNotifierFamily();
 
-  /// See also [AssetsNotifier].
-  AssetsNotifierProvider call(
+  /// See also [TreeViewNotifier].
+  TreeViewNotifierProvider call(
     String companyId,
   ) {
-    return AssetsNotifierProvider(
+    return TreeViewNotifierProvider(
       companyId,
     );
   }
 
   @override
-  AssetsNotifierProvider getProviderOverride(
-    covariant AssetsNotifierProvider provider,
+  TreeViewNotifierProvider getProviderOverride(
+    covariant TreeViewNotifierProvider provider,
   ) {
     return call(
       provider.companyId,
@@ -77,30 +77,30 @@ class AssetsNotifierFamily extends Family<AssetsState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'assetsNotifierProvider';
+  String? get name => r'treeViewNotifierProvider';
 }
 
-/// See also [AssetsNotifier].
-class AssetsNotifierProvider
-    extends AutoDisposeNotifierProviderImpl<AssetsNotifier, AssetsState> {
-  /// See also [AssetsNotifier].
-  AssetsNotifierProvider(
+/// See also [TreeViewNotifier].
+class TreeViewNotifierProvider
+    extends AutoDisposeNotifierProviderImpl<TreeViewNotifier, TreeViewState> {
+  /// See also [TreeViewNotifier].
+  TreeViewNotifierProvider(
     String companyId,
   ) : this._internal(
-          () => AssetsNotifier()..companyId = companyId,
-          from: assetsNotifierProvider,
-          name: r'assetsNotifierProvider',
+          () => TreeViewNotifier()..companyId = companyId,
+          from: treeViewNotifierProvider,
+          name: r'treeViewNotifierProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$assetsNotifierHash,
-          dependencies: AssetsNotifierFamily._dependencies,
+                  : _$treeViewNotifierHash,
+          dependencies: TreeViewNotifierFamily._dependencies,
           allTransitiveDependencies:
-              AssetsNotifierFamily._allTransitiveDependencies,
+              TreeViewNotifierFamily._allTransitiveDependencies,
           companyId: companyId,
         );
 
-  AssetsNotifierProvider._internal(
+  TreeViewNotifierProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -113,8 +113,8 @@ class AssetsNotifierProvider
   final String companyId;
 
   @override
-  AssetsState runNotifierBuild(
-    covariant AssetsNotifier notifier,
+  TreeViewState runNotifierBuild(
+    covariant TreeViewNotifier notifier,
   ) {
     return notifier.build(
       companyId,
@@ -122,10 +122,10 @@ class AssetsNotifierProvider
   }
 
   @override
-  Override overrideWith(AssetsNotifier Function() create) {
+  Override overrideWith(TreeViewNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: AssetsNotifierProvider._internal(
+      override: TreeViewNotifierProvider._internal(
         () => create()..companyId = companyId,
         from: from,
         name: null,
@@ -138,14 +138,14 @@ class AssetsNotifierProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<AssetsNotifier, AssetsState>
+  AutoDisposeNotifierProviderElement<TreeViewNotifier, TreeViewState>
       createElement() {
-    return _AssetsNotifierProviderElement(this);
+    return _TreeViewNotifierProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is AssetsNotifierProvider && other.companyId == companyId;
+    return other is TreeViewNotifierProvider && other.companyId == companyId;
   }
 
   @override
@@ -157,18 +157,18 @@ class AssetsNotifierProvider
   }
 }
 
-mixin AssetsNotifierRef on AutoDisposeNotifierProviderRef<AssetsState> {
+mixin TreeViewNotifierRef on AutoDisposeNotifierProviderRef<TreeViewState> {
   /// The parameter `companyId` of this provider.
   String get companyId;
 }
 
-class _AssetsNotifierProviderElement
-    extends AutoDisposeNotifierProviderElement<AssetsNotifier, AssetsState>
-    with AssetsNotifierRef {
-  _AssetsNotifierProviderElement(super.provider);
+class _TreeViewNotifierProviderElement
+    extends AutoDisposeNotifierProviderElement<TreeViewNotifier, TreeViewState>
+    with TreeViewNotifierRef {
+  _TreeViewNotifierProviderElement(super.provider);
 
   @override
-  String get companyId => (origin as AssetsNotifierProvider).companyId;
+  String get companyId => (origin as TreeViewNotifierProvider).companyId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

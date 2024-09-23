@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 
-import '../presentation/assets.dart';
-import '../presentation/home.dart';
+import '../presentation/tree_view/tree_view.dart';
+import '../presentation/home/home.dart';
 
 List<RouteBase> get routes => [
       GoRoute(

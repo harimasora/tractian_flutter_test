@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../providers/traction_navigator_provider.dart';
+import '../../providers/traction_navigator_provider.dart';
 
 part 'home_navigation.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/fake_api.dart';
+import '../../data/fake_api.dart';
 import 'home_state.dart';
 
 part 'home_notifier.g.dart';
