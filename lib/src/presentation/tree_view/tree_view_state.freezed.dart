@@ -21,6 +21,8 @@ mixin _$TreeViewState {
   bool get loading => throw _privateConstructorUsedError;
   String get searchText => throw _privateConstructorUsedError;
   List<AssetType> get currentFilters => throw _privateConstructorUsedError;
+  TreeController<TreeNode>? get treeController =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of TreeViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -39,7 +41,8 @@ abstract class $TreeViewStateCopyWith<$Res> {
       {AsyncValue<TreeViewResponse> response,
       bool loading,
       String searchText,
-      List<AssetType> currentFilters});
+      List<AssetType> currentFilters,
+      TreeController<TreeNode>? treeController});
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$TreeViewStateCopyWithImpl<$Res, $Val extends TreeViewState>
     Object? loading = null,
     Object? searchText = null,
     Object? currentFilters = null,
+    Object? treeController = freezed,
   }) {
     return _then(_value.copyWith(
       response: null == response
@@ -79,6 +83,10 @@ class _$TreeViewStateCopyWithImpl<$Res, $Val extends TreeViewState>
           ? _value.currentFilters
           : currentFilters // ignore: cast_nullable_to_non_nullable
               as List<AssetType>,
+      treeController: freezed == treeController
+          ? _value.treeController
+          : treeController // ignore: cast_nullable_to_non_nullable
+              as TreeController<TreeNode>?,
     ) as $Val);
   }
 }
@@ -95,7 +103,8 @@ abstract class _$$TreeViewStateImplCopyWith<$Res>
       {AsyncValue<TreeViewResponse> response,
       bool loading,
       String searchText,
-      List<AssetType> currentFilters});
+      List<AssetType> currentFilters,
+      TreeController<TreeNode>? treeController});
 }
 
 /// @nodoc
@@ -115,6 +124,7 @@ class __$$TreeViewStateImplCopyWithImpl<$Res>
     Object? loading = null,
     Object? searchText = null,
     Object? currentFilters = null,
+    Object? treeController = freezed,
   }) {
     return _then(_$TreeViewStateImpl(
       response: null == response
@@ -133,6 +143,10 @@ class __$$TreeViewStateImplCopyWithImpl<$Res>
           ? _value._currentFilters
           : currentFilters // ignore: cast_nullable_to_non_nullable
               as List<AssetType>,
+      treeController: freezed == treeController
+          ? _value.treeController
+          : treeController // ignore: cast_nullable_to_non_nullable
+              as TreeController<TreeNode>?,
     ));
   }
 }
@@ -144,7 +158,8 @@ class _$TreeViewStateImpl extends _TreeViewState {
       {this.response = const AsyncValue<TreeViewResponse>.loading(),
       this.loading = false,
       this.searchText = '',
-      final List<AssetType> currentFilters = const []})
+      final List<AssetType> currentFilters = const [],
+      this.treeController})
       : _currentFilters = currentFilters,
         super._();
 
@@ -167,8 +182,11 @@ class _$TreeViewStateImpl extends _TreeViewState {
   }
 
   @override
+  final TreeController<TreeNode>? treeController;
+
+  @override
   String toString() {
-    return 'TreeViewState(response: $response, loading: $loading, searchText: $searchText, currentFilters: $currentFilters)';
+    return 'TreeViewState(response: $response, loading: $loading, searchText: $searchText, currentFilters: $currentFilters, treeController: $treeController)';
   }
 
   @override
@@ -182,12 +200,14 @@ class _$TreeViewStateImpl extends _TreeViewState {
             (identical(other.searchText, searchText) ||
                 other.searchText == searchText) &&
             const DeepCollectionEquality()
-                .equals(other._currentFilters, _currentFilters));
+                .equals(other._currentFilters, _currentFilters) &&
+            (identical(other.treeController, treeController) ||
+                other.treeController == treeController));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, response, loading, searchText,
-      const DeepCollectionEquality().hash(_currentFilters));
+      const DeepCollectionEquality().hash(_currentFilters), treeController);
 
   /// Create a copy of TreeViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -203,7 +223,8 @@ abstract class _TreeViewState extends TreeViewState {
       {final AsyncValue<TreeViewResponse> response,
       final bool loading,
       final String searchText,
-      final List<AssetType> currentFilters}) = _$TreeViewStateImpl;
+      final List<AssetType> currentFilters,
+      final TreeController<TreeNode>? treeController}) = _$TreeViewStateImpl;
   const _TreeViewState._() : super._();
 
   @override
@@ -214,6 +235,8 @@ abstract class _TreeViewState extends TreeViewState {
   String get searchText;
   @override
   List<AssetType> get currentFilters;
+  @override
+  TreeController<TreeNode>? get treeController;
 
   /// Create a copy of TreeViewState
   /// with the given fields replaced by the non-null parameter values.

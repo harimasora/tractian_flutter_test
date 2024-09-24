@@ -6,7 +6,7 @@ part of 'tree_view_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$treeViewNotifierHash() => r'23b6d29c121ae2e1eb6a50acb7766f0ae1caf3cb';
+String _$treeViewNotifierHash() => r'2cee759dad2e70c4693e88c58ed9365d16274311';
 
 /// Copied from Dart SDK
 class _SystemHash {
