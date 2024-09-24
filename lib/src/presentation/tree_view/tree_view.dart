@@ -38,7 +38,7 @@ class AssetsPage extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
-                    onChanged: notifier.setSearchText,
+                    onChanged: (text) => notifier.setSearchText(text, treeController),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Buscar Ativo ou Local',
@@ -60,7 +60,7 @@ class AssetsPage extends HookConsumerWidget {
                           Icons.bolt,
                           color: currentFilters.contains(AssetType.energy) ? Colors.white : Colors.black,
                         ),
-                        onPressed: () => notifier.toggleFilter(AssetType.energy),
+                        onPressed: () => notifier.toggleFilter(AssetType.energy, treeController),
                         backgroundColor: currentFilters.contains(AssetType.energy) ? Colors.blue : Colors.transparent,
                       ),
                       ActionChip(
@@ -74,7 +74,7 @@ class AssetsPage extends HookConsumerWidget {
                           Icons.warning_amber,
                           color: currentFilters.contains(AssetType.vibration) ? Colors.white : Colors.black,
                         ),
-                        onPressed: () => notifier.toggleFilter(AssetType.vibration),
+                        onPressed: () => notifier.toggleFilter(AssetType.vibration, treeController),
                         backgroundColor:
                             currentFilters.contains(AssetType.vibration) ? Colors.blue : Colors.transparent,
                       ),
@@ -88,6 +88,9 @@ class AssetsPage extends HookConsumerWidget {
                 child: AnimatedTreeView<TreeNode>(
               treeController: treeController,
               nodeBuilder: (BuildContext context, TreeEntry<TreeNode> entry) {
+                if (treeFilter != null && treeFilter.matchOf(entry.node) == null) {
+                  return SizedBox.shrink();
+                }
                 return TreeTile(
                   entry: entry,
                   match: treeFilter?.matchOf(entry.node),

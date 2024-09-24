@@ -31,17 +31,38 @@ class TreeViewNotifier extends _$TreeViewNotifier {
     return node.children;
   }
 
-  void toggleFilter(AssetType selectedFilter) {
+  void toggleFilter(AssetType selectedFilter, TreeController<TreeNode> controller) {
     final newFilters = [...state.currentFilters];
     newFilters.contains(selectedFilter) ? newFilters.remove(selectedFilter) : newFilters.add(selectedFilter);
     state = state.copyWith(
       currentFilters: newFilters,
     );
+
+    if (newFilters.isEmpty) {
+      state = state.copyWith(
+        treeFilter: null,
+      );
+      return;
+    }
+
+    final treeFilter = controller.search((node) => newFilters.contains(node.assetType));
+    state = state.copyWith(
+      treeFilter: treeFilter,
+    );
   }
 
-  setSearchText(String text) {
+  void setSearchText(String text, TreeController<TreeNode> controller) {
+    if (text.isEmpty) {
+      state = state.copyWith(
+        searchText: text,
+        treeFilter: null,
+      );
+      return;
+    }
+    final treeFilter = controller.search((node) => node.name.toLowerCase().contains(text.toLowerCase()));
     state = state.copyWith(
       searchText: text,
+      treeFilter: treeFilter,
     );
   }
 }
