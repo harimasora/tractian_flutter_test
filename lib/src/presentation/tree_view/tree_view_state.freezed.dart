@@ -23,6 +23,8 @@ mixin _$TreeViewState {
   List<AssetType> get currentFilters => throw _privateConstructorUsedError;
   TreeController<TreeNode>? get treeController =>
       throw _privateConstructorUsedError;
+  TreeSearchResult<TreeNode>? get treeFilter =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of TreeViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +44,8 @@ abstract class $TreeViewStateCopyWith<$Res> {
       bool loading,
       String searchText,
       List<AssetType> currentFilters,
-      TreeController<TreeNode>? treeController});
+      TreeController<TreeNode>? treeController,
+      TreeSearchResult<TreeNode>? treeFilter});
 }
 
 /// @nodoc
@@ -65,6 +68,7 @@ class _$TreeViewStateCopyWithImpl<$Res, $Val extends TreeViewState>
     Object? searchText = null,
     Object? currentFilters = null,
     Object? treeController = freezed,
+    Object? treeFilter = freezed,
   }) {
     return _then(_value.copyWith(
       response: null == response
@@ -87,6 +91,10 @@ class _$TreeViewStateCopyWithImpl<$Res, $Val extends TreeViewState>
           ? _value.treeController
           : treeController // ignore: cast_nullable_to_non_nullable
               as TreeController<TreeNode>?,
+      treeFilter: freezed == treeFilter
+          ? _value.treeFilter
+          : treeFilter // ignore: cast_nullable_to_non_nullable
+              as TreeSearchResult<TreeNode>?,
     ) as $Val);
   }
 }
@@ -104,7 +112,8 @@ abstract class _$$TreeViewStateImplCopyWith<$Res>
       bool loading,
       String searchText,
       List<AssetType> currentFilters,
-      TreeController<TreeNode>? treeController});
+      TreeController<TreeNode>? treeController,
+      TreeSearchResult<TreeNode>? treeFilter});
 }
 
 /// @nodoc
@@ -125,6 +134,7 @@ class __$$TreeViewStateImplCopyWithImpl<$Res>
     Object? searchText = null,
     Object? currentFilters = null,
     Object? treeController = freezed,
+    Object? treeFilter = freezed,
   }) {
     return _then(_$TreeViewStateImpl(
       response: null == response
@@ -147,6 +157,10 @@ class __$$TreeViewStateImplCopyWithImpl<$Res>
           ? _value.treeController
           : treeController // ignore: cast_nullable_to_non_nullable
               as TreeController<TreeNode>?,
+      treeFilter: freezed == treeFilter
+          ? _value.treeFilter
+          : treeFilter // ignore: cast_nullable_to_non_nullable
+              as TreeSearchResult<TreeNode>?,
     ));
   }
 }
@@ -159,7 +173,8 @@ class _$TreeViewStateImpl extends _TreeViewState {
       this.loading = false,
       this.searchText = '',
       final List<AssetType> currentFilters = const [],
-      this.treeController})
+      this.treeController,
+      this.treeFilter})
       : _currentFilters = currentFilters,
         super._();
 
@@ -183,10 +198,12 @@ class _$TreeViewStateImpl extends _TreeViewState {
 
   @override
   final TreeController<TreeNode>? treeController;
+  @override
+  final TreeSearchResult<TreeNode>? treeFilter;
 
   @override
   String toString() {
-    return 'TreeViewState(response: $response, loading: $loading, searchText: $searchText, currentFilters: $currentFilters, treeController: $treeController)';
+    return 'TreeViewState(response: $response, loading: $loading, searchText: $searchText, currentFilters: $currentFilters, treeController: $treeController, treeFilter: $treeFilter)';
   }
 
   @override
@@ -202,12 +219,20 @@ class _$TreeViewStateImpl extends _TreeViewState {
             const DeepCollectionEquality()
                 .equals(other._currentFilters, _currentFilters) &&
             (identical(other.treeController, treeController) ||
-                other.treeController == treeController));
+                other.treeController == treeController) &&
+            (identical(other.treeFilter, treeFilter) ||
+                other.treeFilter == treeFilter));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, response, loading, searchText,
-      const DeepCollectionEquality().hash(_currentFilters), treeController);
+  int get hashCode => Object.hash(
+      runtimeType,
+      response,
+      loading,
+      searchText,
+      const DeepCollectionEquality().hash(_currentFilters),
+      treeController,
+      treeFilter);
 
   /// Create a copy of TreeViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -224,7 +249,8 @@ abstract class _TreeViewState extends TreeViewState {
       final bool loading,
       final String searchText,
       final List<AssetType> currentFilters,
-      final TreeController<TreeNode>? treeController}) = _$TreeViewStateImpl;
+      final TreeController<TreeNode>? treeController,
+      final TreeSearchResult<TreeNode>? treeFilter}) = _$TreeViewStateImpl;
   const _TreeViewState._() : super._();
 
   @override
@@ -237,11 +263,235 @@ abstract class _TreeViewState extends TreeViewState {
   List<AssetType> get currentFilters;
   @override
   TreeController<TreeNode>? get treeController;
+  @override
+  TreeSearchResult<TreeNode>? get treeFilter;
 
   /// Create a copy of TreeViewState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TreeViewStateImplCopyWith<_$TreeViewStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$TreeNode {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  List<TreeNode> get children => throw _privateConstructorUsedError;
+  AssetType? get assetType => throw _privateConstructorUsedError;
+  String? get parentId => throw _privateConstructorUsedError;
+
+  /// Create a copy of TreeNode
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $TreeNodeCopyWith<TreeNode> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TreeNodeCopyWith<$Res> {
+  factory $TreeNodeCopyWith(TreeNode value, $Res Function(TreeNode) then) =
+      _$TreeNodeCopyWithImpl<$Res, TreeNode>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      List<TreeNode> children,
+      AssetType? assetType,
+      String? parentId});
+}
+
+/// @nodoc
+class _$TreeNodeCopyWithImpl<$Res, $Val extends TreeNode>
+    implements $TreeNodeCopyWith<$Res> {
+  _$TreeNodeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of TreeNode
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? children = null,
+    Object? assetType = freezed,
+    Object? parentId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      children: null == children
+          ? _value.children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<TreeNode>,
+      assetType: freezed == assetType
+          ? _value.assetType
+          : assetType // ignore: cast_nullable_to_non_nullable
+              as AssetType?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TreeNodeImplCopyWith<$Res>
+    implements $TreeNodeCopyWith<$Res> {
+  factory _$$TreeNodeImplCopyWith(
+          _$TreeNodeImpl value, $Res Function(_$TreeNodeImpl) then) =
+      __$$TreeNodeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      List<TreeNode> children,
+      AssetType? assetType,
+      String? parentId});
+}
+
+/// @nodoc
+class __$$TreeNodeImplCopyWithImpl<$Res>
+    extends _$TreeNodeCopyWithImpl<$Res, _$TreeNodeImpl>
+    implements _$$TreeNodeImplCopyWith<$Res> {
+  __$$TreeNodeImplCopyWithImpl(
+      _$TreeNodeImpl _value, $Res Function(_$TreeNodeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of TreeNode
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? children = null,
+    Object? assetType = freezed,
+    Object? parentId = freezed,
+  }) {
+    return _then(_$TreeNodeImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      children: null == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<TreeNode>,
+      assetType: freezed == assetType
+          ? _value.assetType
+          : assetType // ignore: cast_nullable_to_non_nullable
+              as AssetType?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TreeNodeImpl implements _TreeNode {
+  const _$TreeNodeImpl(
+      {required this.id,
+      required this.name,
+      final List<TreeNode> children = const [],
+      this.assetType,
+      this.parentId})
+      : _children = children;
+
+  @override
+  final String id;
+  @override
+  final String name;
+  final List<TreeNode> _children;
+  @override
+  @JsonKey()
+  List<TreeNode> get children {
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_children);
+  }
+
+  @override
+  final AssetType? assetType;
+  @override
+  final String? parentId;
+
+  @override
+  String toString() {
+    return 'TreeNode(id: $id, name: $name, children: $children, assetType: $assetType, parentId: $parentId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TreeNodeImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._children, _children) &&
+            (identical(other.assetType, assetType) ||
+                other.assetType == assetType) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name,
+      const DeepCollectionEquality().hash(_children), assetType, parentId);
+
+  /// Create a copy of TreeNode
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TreeNodeImplCopyWith<_$TreeNodeImpl> get copyWith =>
+      __$$TreeNodeImplCopyWithImpl<_$TreeNodeImpl>(this, _$identity);
+}
+
+abstract class _TreeNode implements TreeNode {
+  const factory _TreeNode(
+      {required final String id,
+      required final String name,
+      final List<TreeNode> children,
+      final AssetType? assetType,
+      final String? parentId}) = _$TreeNodeImpl;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  List<TreeNode> get children;
+  @override
+  AssetType? get assetType;
+  @override
+  String? get parentId;
+
+  /// Create a copy of TreeNode
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TreeNodeImplCopyWith<_$TreeNodeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

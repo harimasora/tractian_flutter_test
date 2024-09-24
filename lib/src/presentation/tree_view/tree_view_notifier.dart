@@ -24,6 +24,13 @@ class TreeViewNotifier extends _$TreeViewNotifier {
     );
   }
 
+  Iterable<TreeNode> getChildren(TreeNode node) {
+    if (state.treeFilter case TreeSearchResult<TreeNode> filter?) {
+      return node.children.where(filter.hasMatch);
+    }
+    return node.children;
+  }
+
   void toggleFilter(AssetType selectedFilter) {
     final newFilters = [...state.currentFilters];
     newFilters.contains(selectedFilter) ? newFilters.remove(selectedFilter) : newFilters.add(selectedFilter);
@@ -37,4 +44,11 @@ class TreeViewNotifier extends _$TreeViewNotifier {
       searchText: text,
     );
   }
+}
+
+@riverpod
+TreeController<TreeNode> treeController(TreeControllerRef ref, String companyId) {
+  final notifier = ref.watch(TreeViewNotifierProvider(companyId).notifier);
+  final root = ref.watch(TreeViewNotifierProvider(companyId).select((v) => v.root));
+  return TreeController(roots: root.children, childrenProvider: notifier.getChildren)..expandAll();
 }

@@ -26,6 +26,7 @@ class TreeViewState with _$TreeViewState {
     @Default('') String searchText,
     @Default([]) List<AssetType> currentFilters,
     TreeController<TreeNode>? treeController,
+    TreeSearchResult<TreeNode>? treeFilter,
   }) = _TreeViewState;
 
   const TreeViewState._();
@@ -61,20 +62,15 @@ class TreeViewState with _$TreeViewState {
   }
 }
 
-class TreeNode {
-  TreeNode({
-    required this.id,
-    required this.title,
-    this.assetType,
-    this.parentId,
-    Iterable<TreeNode>? children,
-  }) : children = <TreeNode>[...?children];
-
-  final String id;
-  final String title;
-  final AssetType? assetType;
-  final String? parentId;
-  final List<TreeNode> children;
+@freezed
+class TreeNode with _$TreeNode {
+  const factory TreeNode({
+    required String id,
+    required String name,
+    @Default([]) List<TreeNode> children,
+    AssetType? assetType,
+    String? parentId,
+  }) = _TreeNode;
 }
 
 class TreeBuilder {
@@ -88,7 +84,7 @@ class TreeBuilder {
     for (final location in locations) {
       nodeMap[location.id] = TreeNode(
         id: location.id,
-        title: location.name,
+        name: location.name,
         parentId: location.parentId,
       );
     }
@@ -96,14 +92,14 @@ class TreeBuilder {
     for (final asset in assets) {
       nodeMap[asset.id] = TreeNode(
         id: asset.id,
-        title: asset.name,
+        name: asset.name,
         assetType: AssetType.fromString(asset.sensorType),
         parentId: asset.parentId,
       );
     }
 
     // Create the tree structure
-    TreeNode root = TreeNode(id: '/', title: '/'); // Use a dummy root node
+    TreeNode root = TreeNode(id: '/', name: '/'); // Use a dummy root node
 
     var i = 0;
 
@@ -111,18 +107,19 @@ class TreeBuilder {
     while (nodeMap.isNotEmpty && i < 100) {
       for (var node in [...nodeMap.values]) {
         var item = node;
-        final alreadyExists = findInTree(root, (node) => node.children, (node) => node.id == item.id);
+        final alreadyExists = findInTree(root, (node) => [...node.children], (node) => node.id == item.id);
         if (alreadyExists != null) {
           continue;
         }
 
         if (item.parentId == null) {
-          root.children.add(node);
+          root = root.copyWith(children: [...root.children, node]);
           nodeMap.remove(node.id);
         } else {
-          final found = findInTree(root, (node) => node.children, (node) => node.id == item.parentId);
+          TreeNode? found = findInTree(root, (node) => [...node.children], (node) => node.id == item.parentId);
           if (found != null) {
-            found.children.add(node);
+            root = root.copyWith(children: [...root.children]);
+            root = updateNestedChild(found, (v) => v.copyWith(children: [...v.children, node]), root: root);
             nodeMap.remove(node.id);
           }
         }
@@ -130,8 +127,21 @@ class TreeBuilder {
       i++;
     }
 
+    print(root);
+
     return root;
   }
+}
+
+TreeNode updateNestedChild(TreeNode childToUpdate, TreeNode Function(TreeNode data) transformer, {TreeNode? root}) {
+  return (root ?? childToUpdate).copyWith(children: [
+    ...(root ?? childToUpdate)
+        .children
+        .where((child) => child != childToUpdate)
+        .map((child) => updateNestedChild(childToUpdate, transformer, root: child))
+        .toList(),
+    ...(root ?? childToUpdate).children.where((child) => child == childToUpdate).map(transformer).toList()
+  ]);
 }
 
 typedef GetChildren<N> = List<N> Function(N node);

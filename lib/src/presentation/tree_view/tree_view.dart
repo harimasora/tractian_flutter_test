@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'components/sliver_tree.dart';
@@ -19,28 +18,10 @@ class AssetsPage extends HookConsumerWidget {
     final notifier = ref.watch(treeViewNotifierProvider(companyId).notifier);
     final response = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.response));
     final currentFilters = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.currentFilters));
-    final treeController = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.treeController));
-    final root = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.root));
-
-    TreeSearchResult<TreeNode>? filter;
-    Pattern? searchPattern;
-
-    Iterable<TreeNode> getChildren(TreeNode node) {
-      if (filter case TreeSearchResult<TreeNode> filter?) {
-        return node.children.where(filter.hasMatch);
-      }
-      return node.children;
-    }
-
-    useEffect(() {
-      if (root.children.isNotEmpty) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final treeController = TreeController(roots: root.children, childrenProvider: getChildren)..expandAll();
-          notifier.setTreeController(treeController);
-        });
-      }
-      return treeController?.dispose;
-    }, [root]);
+    final treeFilter = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.treeFilter));
+    final searchPattern =
+        ref.watch(treeViewNotifierProvider(companyId).select((v) => RegExp(v.searchText, caseSensitive: false)));
+    final treeController = ref.watch(treeControllerProvider(companyId));
 
     return Scaffold(
       appBar: AppBar(
@@ -104,31 +85,16 @@ class AssetsPage extends HookConsumerWidget {
             ),
             Divider(),
             Expanded(
-              child: treeController != null
-                  ? AnimatedTreeView<TreeNode>(
-                      treeController: treeController,
-                      nodeBuilder: (BuildContext context, TreeEntry<TreeNode> entry) {
-                        return TreeTile(
-                          entry: entry,
-                          match: filter?.matchOf(entry.node),
-                          searchPattern: searchPattern,
-                        );
-                      },
-                    )
-                  : Text('No content'),
-            ),
-            // Expanded(
-            //   child: ListView.builder(
-            //     itemCount: items.length,
-            //     itemBuilder: (context, index) => ListTile(
-            //       title: Text(items[index].name),
-            //       subtitle: Text(items[index].sensorType.toString()),
-            //       onTap: () {
-            //         print(items[index].toString());
-            //       },
-            //     ),
-            //   ),
-            // ),
+                child: AnimatedTreeView<TreeNode>(
+              treeController: treeController,
+              nodeBuilder: (BuildContext context, TreeEntry<TreeNode> entry) {
+                return TreeTile(
+                  entry: entry,
+                  match: treeFilter?.matchOf(entry.node),
+                  searchPattern: searchPattern,
+                );
+              },
+            )),
           ],
         ),
         error: (error, stackTrace) => Text(error.toString()),
@@ -196,7 +162,7 @@ class _TreeTileState extends State<TreeTile> {
   @override
   void didUpdateWidget(covariant TreeTile oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.searchPattern != widget.searchPattern || oldWidget.entry.node.title != widget.entry.node.title) {
+    if (oldWidget.searchPattern != widget.searchPattern || oldWidget.entry.node.name != widget.entry.node.name) {
       titleSpan = buildTextSpan();
     }
   }
@@ -213,7 +179,7 @@ class _TreeTileState extends State<TreeTile> {
   }
 
   InlineSpan buildTextSpan() {
-    final String title = widget.entry.node.title;
+    final String title = widget.entry.node.name;
 
     if (widget.searchPattern == null) {
       return TextSpan(text: title);
