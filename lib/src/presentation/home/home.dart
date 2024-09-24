@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'home_navigation.dart';
 import 'home_notifier.dart';
@@ -12,8 +13,7 @@ class HomePage extends ConsumerWidget {
     final asyncCompanies = ref.watch(homeNotifierProvider.select((state) => state.response));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tractian'),
-        backgroundColor: Colors.blueAccent,
+        title: SvgPicture.asset('assets/icon/logo.svg', semanticsLabel: 'Acme Logo'),
       ),
       body: asyncCompanies.when(
         data: (companies) => ListView.builder(

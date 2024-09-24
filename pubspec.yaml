@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_hooks: ^0.20.5
   flutter_riverpod: ^2.5.1
+  flutter_svg: ^2.0.10+1
   freezed_annotation: ^2.4.4
   go_router: ^14.2.7
   hooks_riverpod: ^2.5.2
@@ -30,3 +31,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/icon/asset.svg
+  - assets/icon/bolt.svg
+  - assets/icon/boltOutline.svg
+  - assets/icon/component.svg
+  - assets/icon/critical.svg
+  - assets/icon/criticalCircle.svg
+  - assets/icon/location.svg
+  - assets/icon/locationMarker.svg
+  - assets/icon/logo.svg
