@@ -1,12 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/fake_api.dart';
 import '../../models/asset.dart';
 import '../../models/location.dart';
 import 'components/tree_controller.dart';
+import 'tree_view_notifier.dart';
 
 part 'tree_view_state.freezed.dart';
+part 'tree_view_state.g.dart';
 
 enum NodeType {
   location,
@@ -36,36 +38,6 @@ class TreeViewState with _$TreeViewState {
   }) = _TreeViewState;
 
   const TreeViewState._();
-
-  TreeNode get root {
-    final assets = response.asData?.value.assets ?? [];
-    final locations = response.asData?.value.locations ?? [];
-
-    final builder = TreeBuilder(assets: assets, locations: locations);
-    final root = builder.buildTree();
-
-    return root;
-  }
-
-  List<Asset> get filteredAssets {
-    final assets = response.asData?.value.assets ?? [];
-    final locations = response.asData?.value.locations ?? [];
-
-    final stuff = [...locations, ...assets];
-
-    final filteredByType = currentFilters.isNotEmpty
-        ? stuff
-            .where((dynamic v) => v is Asset ? currentFilters.map((e) => e.name).contains(v.sensorType) : false)
-            .toList()
-        : assets;
-
-    final filteredByText = filteredByType
-        .where((dynamic v) =>
-            (v is Asset || v is Location) ? v.name.toLowerCase().contains(searchText.toLowerCase()) : false)
-        .toList();
-
-    return filteredByText as List<Asset>;
-  }
 }
 
 @freezed
@@ -107,73 +79,33 @@ class TreeBuilder {
       );
     }
 
-    // Create the tree structure
     TreeNode root = TreeNode(id: '/', name: '/'); // Use a dummy root node
 
-    var i = 0;
-
-    // If the item is 100 levels deep, there is probably some error in the data, so we finish the loop.
-    while (nodeMap.isNotEmpty && i < 100) {
-      for (var node in [...nodeMap.values]) {
-        var item = node;
-        final alreadyExists = findInTree(root, (node) => [...node.children], (node) => node.id == item.id);
-        if (alreadyExists != null) {
-          continue;
+    for (var item in nodeMap.values) {
+      if (item.parentId != null) {
+        final parentItem = nodeMap[item.parentId];
+        if (parentItem != null) {
+          final updatedParent = parentItem.copyWith(
+            children: [...parentItem.children, item],
+          );
+          nodeMap[item.parentId!] = updatedParent;
         }
-
-        if (item.parentId == null) {
-          root = root.copyWith(children: [...root.children, node]);
-          nodeMap.remove(node.id);
-        } else {
-          TreeNode? found = findInTree(root, (node) => [...node.children], (node) => node.id == item.parentId);
-          if (found != null) {
-            root = root.copyWith(children: [...root.children]);
-            root = updateNestedChild(found, (v) => v.copyWith(children: [...v.children, node]), root: root);
-            nodeMap.remove(node.id);
-          }
-        }
+      } else {
+        root = root.copyWith(children: [...root.children, item]);
       }
-      i++;
     }
 
     return root;
   }
 }
 
-TreeNode updateNestedChild(TreeNode childToUpdate, TreeNode Function(TreeNode data) transformer, {TreeNode? root}) {
-  return (root ?? childToUpdate).copyWith(children: [
-    ...(root ?? childToUpdate)
-        .children
-        .where((child) => child != childToUpdate)
-        .map((child) => updateNestedChild(childToUpdate, transformer, root: child))
-        .toList(),
-    ...(root ?? childToUpdate).children.where((child) => child == childToUpdate).map(transformer).toList()
-  ]);
-}
+@riverpod
+TreeNode rootTreeNode(RootTreeNodeRef ref, String companyId) {
+  final response = ref.watch(treeViewNotifierProvider(companyId).select((v) => v.response));
+  final assets = response.asData?.value.assets ?? [];
+  final locations = response.asData?.value.locations ?? [];
 
-N? findInTree<N>(N root, List<N> Function(N node) getChildren, bool Function(N child) childMatches) {
-  N? matched;
-  traverseTree<N>(root, getChildren, (node) {
-    if (childMatches(node)) {
-      matched = node;
-      return false;
-    }
-    return true;
-  });
-
-  return matched;
-}
-
-bool traverseTree<N>(N root, List<N> Function(N node) getChildren, bool Function(N child) processChild) {
-  for (final child in getChildren(root)) {
-    /// we terminate the traversal if [processChild] returns false.
-    if (!processChild(child)) {
-      return false;
-    }
-
-    if (!traverseTree(child, getChildren, processChild)) {
-      return false;
-    }
-  }
-  return true;
+  final builder = TreeBuilder(assets: assets, locations: locations);
+  final root = builder.buildTree();
+  return root;
 }

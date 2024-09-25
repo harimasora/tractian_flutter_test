@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'components/sliver_tree.dart';
 import 'components/tree_controller.dart';
 import 'components/tree_indentation.dart';
-import 'components/tree_view.dart';
 import 'tree_view_notifier.dart';
 import 'tree_view_state.dart';
 
@@ -98,19 +97,25 @@ class AssetsPage extends HookConsumerWidget {
             ),
             Divider(),
             Expanded(
-                child: AnimatedTreeView<TreeNode>(
-              treeController: treeController,
-              nodeBuilder: (BuildContext context, TreeEntry<TreeNode> entry) {
-                if (treeFilter != null && treeFilter.matchOf(entry.node) == null) {
-                  return SizedBox.shrink();
-                }
-                return TreeTile(
-                  entry: entry,
-                  match: treeFilter?.matchOf(entry.node),
-                  searchPattern: searchPattern,
-                );
-              },
-            )),
+              // child: Text(treeController.toString()),
+              child: CustomScrollView(
+                slivers: [
+                  SliverTree<TreeNode>(
+                    controller: treeController,
+                    nodeBuilder: (BuildContext context, TreeEntry<TreeNode> entry) {
+                      if (treeFilter != null && treeFilter.matchOf(entry.node) == null) {
+                        return SizedBox.shrink();
+                      }
+                      return TreeTile(
+                        entry: entry,
+                        match: treeFilter?.matchOf(entry.node),
+                        searchPattern: searchPattern,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         error: (error, stackTrace) => Text(error.toString()),

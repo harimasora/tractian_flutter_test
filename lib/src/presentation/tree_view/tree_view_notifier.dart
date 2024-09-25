@@ -74,7 +74,7 @@ class TreeViewNotifier extends _$TreeViewNotifier {
 
 @riverpod
 TreeController<TreeNode> treeController(TreeControllerRef ref, String companyId) {
-  final notifier = ref.watch(TreeViewNotifierProvider(companyId).notifier);
-  final root = ref.watch(TreeViewNotifierProvider(companyId).select((v) => v.root));
+  final notifier = ref.watch(treeViewNotifierProvider(companyId).notifier);
+  final root = ref.watch(rootTreeNodeProvider(companyId));
   return TreeController(roots: root.children, childrenProvider: notifier.getChildren)..expandAll();
 }
