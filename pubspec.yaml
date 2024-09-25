@@ -36,6 +36,7 @@ flutter:
   - assets/icon/bolt.svg
   - assets/icon/boltOutline.svg
   - assets/icon/component.svg
+  - assets/icon/component.png
   - assets/icon/critical.svg
   - assets/icon/criticalCircle.svg
   - assets/icon/location.svg

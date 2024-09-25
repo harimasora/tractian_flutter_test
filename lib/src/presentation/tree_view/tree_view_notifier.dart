@@ -31,37 +31,42 @@ class TreeViewNotifier extends _$TreeViewNotifier {
     return node.children;
   }
 
-  void toggleFilter(AssetType selectedFilter, TreeController<TreeNode> controller) {
+  void toggleFilter(ComponentType selectedFilter, TreeController<TreeNode> controller) {
     final newFilters = [...state.currentFilters];
     newFilters.contains(selectedFilter) ? newFilters.remove(selectedFilter) : newFilters.add(selectedFilter);
     state = state.copyWith(
       currentFilters: newFilters,
     );
 
-    if (newFilters.isEmpty) {
-      state = state.copyWith(
-        treeFilter: null,
-      );
-      return;
-    }
-
-    final treeFilter = controller.search((node) => newFilters.contains(node.assetType));
-    state = state.copyWith(
-      treeFilter: treeFilter,
-    );
+    _filterTree(controller);
   }
 
   void setSearchText(String text, TreeController<TreeNode> controller) {
-    if (text.isEmpty) {
-      state = state.copyWith(
-        searchText: text,
-        treeFilter: null,
-      );
-      return;
-    }
-    final treeFilter = controller.search((node) => node.name.toLowerCase().contains(text.toLowerCase()));
     state = state.copyWith(
       searchText: text,
+    );
+    _filterTree(controller);
+  }
+
+  void _filterTree(TreeController<TreeNode> controller) {
+    final filters = state.currentFilters;
+    final searchText = state.searchText;
+
+    state = state.copyWith(
+      treeFilter: null,
+    );
+
+    if (searchText.isEmpty && filters.isEmpty) {
+      return;
+    }
+
+    final treeFilter = controller.search((node) {
+      final toggleCondition = filters.isNotEmpty ? filters.contains(node.componentType) : true;
+      final textCondition = searchText.isNotEmpty ? node.name.toLowerCase().contains(searchText.toLowerCase()) : true;
+      return toggleCondition && textCondition;
+    });
+
+    state = state.copyWith(
       treeFilter: treeFilter,
     );
   }

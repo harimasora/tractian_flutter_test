@@ -20,6 +20,12 @@ class MainApp extends ConsumerWidget {
     return MaterialApp.router(
       theme: ThemeData(
         appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
           backgroundColor: Color(0xFF17192D),
         ),
       ),

@@ -8,13 +8,19 @@ import 'components/tree_controller.dart';
 
 part 'tree_view_state.freezed.dart';
 
-enum AssetType {
+enum NodeType {
+  location,
+  asset,
+  component,
+}
+
+enum ComponentType {
   energy,
   vibration,
   ;
 
-  static AssetType? fromString(String? text) {
-    return AssetType.values.where((v) => v.name == text).firstOrNull;
+  static ComponentType? fromString(String? text) {
+    return ComponentType.values.where((v) => v.name == text).firstOrNull;
   }
 }
 
@@ -24,7 +30,7 @@ class TreeViewState with _$TreeViewState {
     @Default(AsyncValue<TreeViewResponse>.loading()) AsyncValue<TreeViewResponse> response,
     @Default(false) bool loading,
     @Default('') String searchText,
-    @Default([]) List<AssetType> currentFilters,
+    @Default([]) List<ComponentType> currentFilters,
     TreeController<TreeNode>? treeController,
     TreeSearchResult<TreeNode>? treeFilter,
   }) = _TreeViewState;
@@ -68,7 +74,8 @@ class TreeNode with _$TreeNode {
     required String id,
     required String name,
     @Default([]) List<TreeNode> children,
-    AssetType? assetType,
+    @Default(NodeType.location) NodeType nodeType,
+    ComponentType? componentType,
     String? parentId,
   }) = _TreeNode;
 }
@@ -86,6 +93,7 @@ class TreeBuilder {
         id: location.id,
         name: location.name,
         parentId: location.parentId,
+        nodeType: NodeType.location,
       );
     }
 
@@ -93,8 +101,9 @@ class TreeBuilder {
       nodeMap[asset.id] = TreeNode(
         id: asset.id,
         name: asset.name,
-        assetType: AssetType.fromString(asset.sensorType),
+        componentType: ComponentType.fromString(asset.sensorType),
         parentId: asset.parentId,
+        nodeType: asset.parentId == null ? NodeType.asset : NodeType.component,
       );
     }
 
